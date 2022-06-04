@@ -2,36 +2,36 @@ import telebot
 import random
 from telebot import types
 
-# Загружаем список интересных фактов
+# Р—Р°РіСЂСѓР¶Р°РµРј СЃРїРёСЃРѕРє РёРЅС‚РµСЂРµСЃРЅС‹С… С„Р°РєС‚РѕРІ
 f = open('data/facts.txt', 'r', encoding='UTF-8')
 facts = f.read().split('\n')
 f.close()
-# Загружаем список поговорок
+# Р—Р°РіСЂСѓР¶Р°РµРј СЃРїРёСЃРѕРє РїРѕРіРѕРІРѕСЂРѕРє
 f = open('data/thinks.txt', 'r', encoding='UTF-8')
 thinks  = f.read().split('\n')
 f.close()
-# Создаем бота
+# РЎРѕР·РґР°РµРј Р±РѕС‚Р°
 bot = telebot.TeleBot("5282240819:AAGP9OzrqaFlrvizpacEbfiUUYDznxxLktw")
-# Команда start
+# РљРѕРјР°РЅРґР° start
 @bot.message_handler(commands=["start"])
 def start(m, res=False):
-        # Добавляем две кнопки
+        # Р”РѕР±Р°РІР»СЏРµРј РґРІРµ РєРЅРѕРїРєРё
         markup=types.ReplyKeyboardMarkup(resize_keyboard=True)
-        item1=types.KeyboardButton("Факт")
-        item2=types.KeyboardButton("Поговорка")
+        item1=types.KeyboardButton("Р¤Р°РєС‚")
+        item2=types.KeyboardButton("РџРѕРіРѕРІРѕСЂРєР°")
         markup.add(item1)
         markup.add(item2)
-        bot.send_message(m.chat.id, 'Нажми: \nФакт для получения интересного факта\nПоговорка — для получения мудрой цитаты ',  reply_markup=markup)
-# Получение сообщений от юзера
+        bot.send_message(m.chat.id, 'РќР°Р¶РјРё: \nР¤Р°РєС‚ РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РёРЅС‚РµСЂРµСЃРЅРѕРіРѕ С„Р°РєС‚Р°\nРџРѕРіРѕРІРѕСЂРєР° вЂ” РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РјСѓРґСЂРѕР№ С†РёС‚Р°С‚С‹ ',  reply_markup=markup)
+# РџРѕР»СѓС‡РµРЅРёРµ СЃРѕРѕР±С‰РµРЅРёР№ РѕС‚ СЋР·РµСЂР°
 @bot.message_handler(content_types=["text"])
 def handle_text(message):
-    # Если юзер прислал 1, выдаем ему случайный факт
-    if message.text.strip() == 'Факт' :
+    # Р•СЃР»Рё СЋР·РµСЂ РїСЂРёСЃР»Р°Р» 1, РІС‹РґР°РµРј РµРјСѓ СЃР»СѓС‡Р°Р№РЅС‹Р№ С„Р°РєС‚
+    if message.text.strip() == 'Р¤Р°РєС‚' :
             answer = random.choice(facts)
-    # Если юзер прислал 2, выдаем умную мысль
-    elif message.text.strip() == 'Поговорка':
+    # Р•СЃР»Рё СЋР·РµСЂ РїСЂРёСЃР»Р°Р» 2, РІС‹РґР°РµРј СѓРјРЅСѓСЋ РјС‹СЃР»СЊ
+    elif message.text.strip() == 'РџРѕРіРѕРІРѕСЂРєР°':
             answer = random.choice(thinks)
-    # Отсылаем юзеру сообщение в его чат
+    # РћС‚СЃС‹Р»Р°РµРј СЋР·РµСЂСѓ СЃРѕРѕР±С‰РµРЅРёРµ РІ РµРіРѕ С‡Р°С‚
     bot.send_message(message.chat.id, answer)
-# Запускаем бота
+# Р—Р°РїСѓСЃРєР°РµРј Р±РѕС‚Р°
 bot.polling(none_stop=True, interval=0)
